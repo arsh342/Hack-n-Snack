@@ -7,12 +7,7 @@ export interface Product {
   category: string;
   available: boolean;
   canteen_id: string;
-  nutritional_info: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
+  created_at: string;
 }
 
 export interface Order {
@@ -22,11 +17,15 @@ export interface Order {
   status: 'pending' | 'preparing' | 'ready' | 'completed' | 'cancelled';
   total_amount: number;
   created_at: string;
-  items: {
-    product_id: string;
-    quantity: number;
-    price: number;
-  }[];
+}
+
+export interface OrderItem {
+  id: string;
+  order_id: string;
+  product_id: string;
+  quantity: number;
+  price: number;
+  created_at: string;
 }
 
 export interface Canteen {
@@ -36,13 +35,7 @@ export interface Canteen {
   location: string;
   opening_time: string;
   closing_time: string;
-  rating: number;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  icon: string;
+  created_at: string;
 }
 
 export interface CartItem {
