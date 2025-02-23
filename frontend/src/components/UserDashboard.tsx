@@ -5,12 +5,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { ShoppingCart, Plus, Minus, Gift, Clock, Heart, Search, Filter, X } from "lucide-react";
-import { getProducts, getCanteens, toggleFavorite, supabase } from "../lib/supabase";
+import { getProducts, getCanteens, toggleFavorite, supabase } from "../lib/supabase"; // Updated import
 import Layout from "./layout/Layout";
 import ProductGrid from "./products/ProductGrid";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Database } from '../types/database'; // Import the Database type
-
 type Product = Database['public']['Tables']['products']['Row'];
 
 interface Canteen {
