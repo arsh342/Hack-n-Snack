@@ -1,5 +1,5 @@
-// SearchBar.tsx
-import React, { useState, useEffect } from 'react';
+// src/components/search/SearchBar.tsx
+import React, { useState, useCallback } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -32,13 +32,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     rating: 0,
   });
 
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      onSearch(query, filters);
-    }, 300);
+  // Memoized handler to avoid re-renders
+  const handleSearchChange = useCallback((newQuery: string, newFilters: SearchFilters) => {
+    setQuery(newQuery);
+    setFilters(newFilters);
+    onSearch(newQuery, newFilters);
+  }, [onSearch]);
 
-    return () => clearTimeout(debounceTimer);
-  }, [query, filters, onSearch]);
+  // Prevent any form-like submission behavior
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault(); // Ensure no default behavior triggers a reload
+    handleSearchChange(e.target.value, filters);
+  };
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
@@ -46,7 +51,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleInputChange}
           placeholder="Search for dishes, cuisines, or outlets..."
           className="w-full px-5 py-3 pl-12 pr-12 text-gray-900 placeholder-gray-500 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
         />
@@ -86,12 +91,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     <button
                       key={category}
                       onClick={() => {
-                        setFilters(prev => ({
-                          ...prev,
-                          category: prev.category.includes(category)
-                            ? prev.category.filter(c => c !== category)
-                            : [...prev.category, category]
-                        }));
+                        const newCategory = filters.category.includes(category)
+                          ? filters.category.filter(c => c !== category)
+                          : [...filters.category, category];
+                        handleSearchChange(query, { ...filters, category: newCategory });
                       }}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-150 ${
                         filters.category.includes(category)
@@ -116,10 +119,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     step="10"
                     value={filters.priceRange[1]}
                     onChange={(e) => {
-                      setFilters(prev => ({
-                        ...prev,
-                        priceRange: [0, parseInt(e.target.value)]
-                      }));
+                      const newPriceRange: [number, number] = [0, parseInt(e.target.value)];
+                      handleSearchChange(query, { ...filters, priceRange: newPriceRange });
                     }}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                   />
@@ -139,13 +140,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                         type="checkbox"
                         checked={value}
                         onChange={() => {
-                          setFilters(prev => ({
-                            ...prev,
-                            dietary: {
-                              ...prev.dietary,
-                              [key]: !value
-                            }
-                          }));
+                          const newDietary = { ...filters.dietary, [key]: !value };
+                          handleSearchChange(query, { ...filters, dietary: newDietary });
                         }}
                         className="rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4"
                       />
@@ -165,10 +161,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     <button
                       key={rating}
                       onClick={() => {
-                        setFilters(prev => ({
-                          ...prev,
-                          rating: rating === filters.rating ? 0 : rating
-                        }));
+                        const newRating = rating === filters.rating ? 0 : rating;
+                        handleSearchChange(query, { ...filters, rating: newRating });
                       }}
                       className={`p-1 text-2xl ${
                         rating <= filters.rating
@@ -186,7 +180,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             <div className="mt-6 flex justify-end space-x-3">
               <button
                 onClick={() => {
-                  setFilters({
+                  const resetFilters: SearchFilters = {
                     category: [],
                     priceRange: [0, 1000],
                     dietary: {
@@ -195,7 +189,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                       glutenFree: false,
                     },
                     rating: 0,
-                  });
+                  };
+                  handleSearchChange(query, resetFilters);
                 }}
                 className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 font-medium transition-colors duration-150"
               >
