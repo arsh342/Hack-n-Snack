@@ -1,5 +1,4 @@
-// src/components/search/SearchBar.tsx
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -32,36 +31,50 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     rating: 0,
   });
 
-  // Memoized handler to avoid re-renders
-  const handleSearchChange = useCallback((newQuery: string, newFilters: SearchFilters) => {
-    setQuery(newQuery);
-    setFilters(newFilters);
-    onSearch(newQuery, newFilters);
-  }, [onSearch]);
-
-  // Prevent any form-like submission behavior
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault(); // Ensure no default behavior triggers a reload
-    handleSearchChange(e.target.value, filters);
+    setQuery(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSearch(query, filters);
+    }
+  };
+
+  const handleSearch = () => {
+    onSearch(query, filters);
+  };
+
+  const updateFilters = (newFilters: SearchFilters) => {
+    setFilters(newFilters);
   };
 
   return (
     <div className="relative w-full max-w-4xl mx-auto">
-      <div className="relative">
+      <div className="relative flex items-center">
         <input
           type="text"
           value={query}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           placeholder="Search for dishes, cuisines, or outlets..."
-          className="w-full px-5 py-3 pl-12 pr-12 text-gray-900 placeholder-gray-500 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
+          className="w-full px-5 py-3 pl-12 pr-20 text-gray-900 placeholder-gray-500 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
         />
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-150"
-        >
-          <Filter size={20} />
-        </button>
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex space-x-2">
+          <button
+            onClick={handleSearch}
+            className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+          >
+            <Search size={20} />
+          </button>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+          >
+            <Filter size={20} />
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -83,7 +96,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             </div>
 
             <div className="space-y-6">
-              {/* Categories */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2">Categories</h4>
                 <div className="flex flex-wrap gap-2">
@@ -92,9 +104,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                       key={category}
                       onClick={() => {
                         const newCategory = filters.category.includes(category)
-                          ? filters.category.filter(c => c !== category)
+                          ? filters.category.filter((c) => c !== category)
                           : [...filters.category, category];
-                        handleSearchChange(query, { ...filters, category: newCategory });
+                        updateFilters({ ...filters, category: newCategory });
                       }}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-150 ${
                         filters.category.includes(category)
@@ -108,7 +120,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 </div>
               </div>
 
-              {/* Price Range */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2">Price Range</h4>
                 <div className="flex items-center space-x-4">
@@ -120,7 +131,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     value={filters.priceRange[1]}
                     onChange={(e) => {
                       const newPriceRange: [number, number] = [0, parseInt(e.target.value)];
-                      handleSearchChange(query, { ...filters, priceRange: newPriceRange });
+                      updateFilters({ ...filters, priceRange: newPriceRange });
                     }}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                   />
@@ -130,7 +141,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 </div>
               </div>
 
-              {/* Dietary Preferences */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2">Dietary Preferences</h4>
                 <div className="flex flex-wrap gap-4">
@@ -141,7 +151,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                         checked={value}
                         onChange={() => {
                           const newDietary = { ...filters.dietary, [key]: !value };
-                          handleSearchChange(query, { ...filters, dietary: newDietary });
+                          updateFilters({ ...filters, dietary: newDietary });
                         }}
                         className="rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4"
                       />
@@ -153,7 +163,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                 </div>
               </div>
 
-              {/* Rating */}
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2">Minimum Rating</h4>
                 <div className="flex items-center space-x-2">
@@ -162,7 +171,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                       key={rating}
                       onClick={() => {
                         const newRating = rating === filters.rating ? 0 : rating;
-                        handleSearchChange(query, { ...filters, rating: newRating });
+                        updateFilters({ ...filters, rating: newRating });
                       }}
                       className={`p-1 text-2xl ${
                         rating <= filters.rating
@@ -190,14 +199,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                     },
                     rating: 0,
                   };
-                  handleSearchChange(query, resetFilters);
+                  setFilters(resetFilters);
+                  setQuery('');
+                  onSearch('', resetFilters);
                 }}
                 className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 font-medium transition-colors duration-150"
               >
                 Reset
               </button>
               <button
-                onClick={() => setShowFilters(false)}
+                onClick={() => {
+                  setShowFilters(false);
+                  onSearch(query, filters);
+                }}
                 className="px-4 py-2 text-sm text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-medium"
               >
                 Apply Filters

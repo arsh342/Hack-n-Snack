@@ -3,6 +3,10 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        league: ['League Gothic', 'sans-serif'],
+      },
       colors: {
         'brand': {
           50: '#f5f7ff',
