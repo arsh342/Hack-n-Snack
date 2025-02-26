@@ -1,35 +1,38 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useNavigate } from "react-router-dom"
-import { LogOut, Menu, User, X, ChefHat } from "lucide-react"
-import { supabase } from "../../lib/supabase"
-import { toast } from "react-hot-toast"
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { LogOut, Menu, User, X, ChefHat } from "lucide-react";
+import { supabase } from "../../lib/supabase";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
-  const navigate = useNavigate()
-  const [user, setUser] = React.useState<any>(null)
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const navigate = useNavigate();
+  const [user, setUser] = React.useState<any>(null);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     const getUser = async () => {
       const {
         data: { user },
-      } = await supabase.auth.getUser()
-      setUser(user)
-    }
-    getUser()
-  }, [])
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut()
-      navigate("/")
-      toast.success("Logged out successfully")
+      await supabase.auth.signOut();
+      navigate("/");
+      toast.success("Logged out successfully");
     } catch (error) {
-      toast.error("Error logging out")
+      toast.error("Error logging out");
     }
-  }
+  };
+
+  // Extract the user's name from user_metadata, fallback to "User" if not available
+  const userName = user?.user_metadata?.name || user?.user_metadata?.full_name || "User";
 
   return (
     <header className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-lg">
@@ -45,7 +48,7 @@ const Header = () => {
               <div className="relative flex items-center gap-6">
                 <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/10">
                   <User size={18} className="text-indigo-100" />
-                  <span className="text-sm font-medium text-indigo-50">{user.email}</span>
+                  <span className="text-sm font-medium text-indigo-50">Welcome, {userName}</span>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -79,7 +82,7 @@ const Header = () => {
           <div className="px-4 py-3 space-y-3">
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white/10">
               <User size={20} />
-              <span className="text-sm">{user.email}</span>
+              <span className="text-sm">Welcome, {userName}</span>
             </div>
             <button
               onClick={handleLogout}
@@ -92,8 +95,7 @@ const Header = () => {
         )}
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
-
+export default Header;
