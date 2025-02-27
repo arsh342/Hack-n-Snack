@@ -27,17 +27,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
+  // Helper to format dietary info
+  const getDietaryInfo = () => {
+    const { dietary_info } = product;
+    const tags = [];
+    if (dietary_info.vegetarian) tags.push('Vegetarian');
+    if (dietary_info.vegan) tags.push('Vegan');
+    if (dietary_info.gluten_free) tags.push('Gluten-Free');
+    if (dietary_info.contains_nuts) tags.push('Contains Nuts');
+    if (dietary_info.spicy_level > 0) tags.push(`Spicy (Level ${dietary_info.spicy_level})`);
+    return tags.length > 0 ? tags.join(', ') : 'No dietary info available';
+  };
+
+  // Helper to format customization options
+  const getCustomizationOptions = () => {
+    if (!product.customization_options?.length) return 'No customizations available';
+    return product.customization_options
+      .map((opt) => `${opt.name}: ${opt.options.map((o) => o.name).join(', ')}`)
+      .join('; ');
+  };
+
   return (
     <motion.div
       layout
       className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-200 w-full max-w-sm flex flex-col"
     >
       <div className="relative w-full h-48 flex-shrink-0">
-        {/* image_url not in minimal schema, using placeholder */}
         <img
-          src={'https://via.placeholder.com/300x200'} // Fallback since image_url isn’t fetched
+          src={product.image_url || 'https://via.placeholder.com/300x200'}
           alt={product.name}
           className="w-full h-full object-cover"
+          loading="lazy"
         />
         <button
           onClick={() => onToggleFavorite(product.id)}
@@ -64,17 +84,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         </div>
 
-        {/* description not in minimal schema, omitting or using fallback */}
         <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
-          {/* Placeholder since description isn’t fetched */}
-          No description available
+          {product.description || 'No description available'}
         </p>
 
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             <Clock className="w-4 h-4 text-gray-400" />
-            {/* preparation_time not in minimal schema, using fallback */}
-            <span className="text-sm text-gray-500">15 mins</span>
+            <span className="text-sm text-gray-500">
+              {product.preparation_time} mins
+            </span>
           </div>
           <button
             onClick={() => setShowDetails(!showDetails)}
@@ -94,14 +113,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
               className="overflow-hidden"
             >
               <div className="py-4 border-t border-gray-200 space-y-3">
-                {/* dietary_tags and customization_options not in minimal schema */}
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Dietary Info</h4>
-                  <p className="text-sm text-gray-600">Not available</p>
+                  <p className="text-sm text-gray-600">{getDietaryInfo()}</p>
                 </div>
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Customization Options</h4>
-                  <p className="text-sm text-gray-600">Not available</p>
+                  <p className="text-sm text-gray-600">{getCustomizationOptions()}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Cuisine</h4>
+                  <p className="text-sm text-gray-600">{product.cuisine_type}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Rating</h4>
+                  <p className="text-sm text-gray-600">
+                    {product.rating.toFixed(1)} ({product.review_count} reviews)
+                  </p>
                 </div>
               </div>
             </motion.div>
