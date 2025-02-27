@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { Search, Filter, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+
+import React, { useState } from "react";
+import { Search, Filter, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface SearchFilters {
   category: string[];
@@ -18,16 +20,12 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<SearchFilters>({
     category: [],
     priceRange: [0, 1000],
-    dietary: {
-      vegetarian: false,
-      vegan: false,
-      glutenFree: false,
-    },
+    dietary: { vegetarian: false, vegan: false, glutenFree: false },
     rating: 0,
   });
 
@@ -36,7 +34,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onSearch(query, filters);
     }
   };
@@ -57,20 +55,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           value={query}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Search for dishes, cuisines, or outlets..."
-          className="w-full px-5 py-3 pl-12 pr-20 text-gray-900 placeholder-gray-500 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
+          placeholder="Search for snacks, categories, or canteens..."
+          className="w-full px-5 py-3 pl-12 pr-20 text-gray-900 placeholder-gray-500 bg-green-100 border border-green-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm transition-all duration-200"
         />
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
         <div className="absolute right-4 top-1/2 transform -translate-y-1/2 flex space-x-2">
           <button
             onClick={handleSearch}
-            className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+            className="text-gray-400 hover:text-green-600 transition-colors duration-150"
           >
             <Search size={20} />
           </button>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+            className="text-gray-400 hover:text-green-600 transition-colors duration-150"
           >
             <Filter size={20} />
           </button>
@@ -83,13 +81,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-xl border border-gray-100 p-5"
+            className="absolute z-10 w-full mt-2 bg-green-100 rounded-xl shadow-xl border border-green-200 p-5"
           >
             <div className="flex justify-between items-center mb-5">
               <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
               <button
                 onClick={() => setShowFilters(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors duration-150"
+                className="text-gray-400 hover:text-green-600 transition-colors duration-150"
               >
                 <X size={20} />
               </button>
@@ -99,7 +97,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               <div>
                 <h4 className="text-sm font-medium text-gray-700 mb-2">Categories</h4>
                 <div className="flex flex-wrap gap-2">
-                  {['Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Beverages'].map((category) => (
+                  {["Breakfast", "Lunch", "Dinner", "Snacks", "Beverages"].map((category) => (
                     <button
                       key={category}
                       onClick={() => {
@@ -108,10 +106,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                           : [...filters.category, category];
                         updateFilters({ ...filters, category: newCategory });
                       }}
-                      className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-150 ${
+                      className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm ${
                         filters.category.includes(category)
-                          ? 'bg-indigo-100 text-indigo-800'
-                          : 'bg-gray-100 text-gray-800 hover:bg-indigo-50'
+                          ? "bg-green-200 text-green-800"
+                          : "bg-green-50 text-gray-800 hover:bg-green-200"
                       }`}
                     >
                       {category}
@@ -133,11 +131,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                       const newPriceRange: [number, number] = [0, parseInt(e.target.value)];
                       updateFilters({ ...filters, priceRange: newPriceRange });
                     }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    className="w-full h-2 bg-green-200 rounded-lg appearance-none cursor-pointer accent-green-600"
                   />
-                  <span className="text-sm text-gray-600 font-medium">
-                    ₹0 - ₹{filters.priceRange[1]}
-                  </span>
+                  <span className="text-sm text-gray-600 font-medium">$0 - ${filters.priceRange[1]}</span>
                 </div>
               </div>
 
@@ -153,10 +149,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                           const newDietary = { ...filters.dietary, [key]: !value };
                           updateFilters({ ...filters, dietary: newDietary });
                         }}
-                        className="rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                        className="rounded text-green-600 focus:ring-green-500 h-4 w-4 shadow-sm"
                       />
                       <span className="text-sm text-gray-700 font-medium">
-                        {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()}
+                        {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1").trim()}
                       </span>
                     </label>
                   ))}
@@ -175,8 +171,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                       }}
                       className={`p-1 text-2xl ${
                         rating <= filters.rating
-                          ? 'text-yellow-400'
-                          : 'text-gray-300 hover:text-yellow-300'
+                          ? "text-yellow-400"
+                          : "text-gray-300 hover:text-yellow-300"
                       } transition-colors duration-150`}
                     >
                       ★
@@ -192,18 +188,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                   const resetFilters: SearchFilters = {
                     category: [],
                     priceRange: [0, 1000],
-                    dietary: {
-                      vegetarian: false,
-                      vegan: false,
-                      glutenFree: false,
-                    },
+                    dietary: { vegetarian: false, vegan: false, glutenFree: false },
                     rating: 0,
                   };
                   setFilters(resetFilters);
-                  setQuery('');
-                  onSearch('', resetFilters);
+                  setQuery("");
+                  onSearch("", resetFilters);
                 }}
-                className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 font-medium transition-colors duration-150"
+                className="px-4 py-2 text-sm text-gray-700 hover:text-green-900 font-medium transition-colors duration-200"
               >
                 Reset
               </button>
@@ -212,7 +204,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
                   setShowFilters(false);
                   onSearch(query, filters);
                 }}
-                className="px-4 py-2 text-sm text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-colors duration-200 font-medium"
+                className="px-4 py-2 text-sm text-white bg-green-600 rounded-xl hover:bg-green-700 transition-all duration-200 font-medium shadow-md"
               >
                 Apply Filters
               </button>
