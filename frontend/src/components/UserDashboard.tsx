@@ -358,7 +358,7 @@ const UserDashboard = () => {
                 <div className="flex justify-between items-center mb-6">
                   <span className="font-semibold text-gray-900 text-lg">Total:</span>
                   <span className="font-semibold text-gray-900 text-lg">
-                    $ {cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0).toFixed(2)}
+                  ₹ {cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0).toFixed(2)}
                   </span>
                 </div>
                 <button
