@@ -487,7 +487,7 @@ const UserDashboard = () => {
                           )}
                           <div>
                             <h3 className="font-semibold text-gray-800 text-lg">{product.name}</h3>
-                            <p className="text-sm text-gray-600">$ {product.price.toFixed(2)}</p>
+                            <p className="text-sm text-gray-600">₹ {product.price.toFixed(2)}</p>
                           </div>
                         </div>
                         <button
