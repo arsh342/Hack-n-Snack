@@ -8,8 +8,8 @@ import { getProducts, getCanteens, toggleFavorite, supabase } from "../lib/supab
 import Layout from "./layout/Layout";
 import ProductGrid from "./products/ProductGrid";
 import SearchBar from "./search/SearchBar";
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
+// import Header from "./layout/Header";
+// import Footer from "./layout/Footer";
 import Carousel from "./Carousel";
 
 interface Canteen {
@@ -434,7 +434,7 @@ const UserDashboard = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-700 font-medium text-lg">
-                          Total: $ {order.total_amount.toFixed(2)}
+                          Total: ₹ {order.total_amount.toFixed(2)}
                         </span>
                         <span
                           className={`text-sm px-3 py-1 rounded-full font-medium ${
