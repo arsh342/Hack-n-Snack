@@ -334,7 +334,7 @@ const UserDashboard = () => {
                     )}
                     <div>
                       <h3 className="font-semibold text-gray-800 text-lg">{item.product.name}</h3>
-                      <p className="text-gray-600 text-sm">$ {(item.product.price * item.quantity).toFixed(2)}</p>
+                      <p className="text-gray-600 text-sm">₹ {(item.product.price * item.quantity).toFixed(2)}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4 bg-green-200 rounded-full px-4 py-2 shadow-md">
