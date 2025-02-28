@@ -513,17 +513,19 @@ const AuthForm = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                     <motion.div
-                      className="w-full"
+                      className="w-full max-w-full"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <GoogleLogin
-                        onSuccess={handleGoogleLogin}
-                        onError={() => toast.error("Google login failed")}
-                        width="100%"
-                      />
+                      <div className="w-full overflow-hidden">
+                        <GoogleLogin
+                          onSuccess={handleGoogleLogin}
+                          onError={() => toast.error("Google login failed")}
+                          width="100%"
+                        />
+                      </div>
                     </motion.div>
                     <motion.button
                       type="button"
