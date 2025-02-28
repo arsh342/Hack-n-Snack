@@ -6,6 +6,11 @@
 ## 🌟 Overview
 SnackSphere is a modern e-commerce platform for snacks, featuring role-based access for users, canteens, and admins. Built with React, Next.js, Supabase, and Tailwind CSS, it offers seamless browsing, ordering, and management with responsive design and animations.
 
+
+
+https://github.com/user-attachments/assets/cd99500b-cacd-4ec8-86c5-693711d9ab60
+
+
 ### Key Features
 - User, canteen, and admin dashboards
 - Product search, filtering, and ordering
@@ -91,3 +96,4 @@ Visit [http://localhost:5173](http://localhost:5173).
 
 ## 📜 License
 **MIT License** – See `LICENSE` for details.
+
