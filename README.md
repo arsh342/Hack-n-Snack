@@ -48,8 +48,12 @@ npm install
 2. Add the following to your `.env.local` file:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_SUPABASE_URL=your-supabase-url
+VITE_GOOGLE_CLIENT_ID=your-google-client-id
+VITE_GOOGLE_CLIENT_SECRET=your-google-client-secret
+VITE_SOCKET_URL=your-socket-url
+VITE_STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
 ```
 
 ### Run Locally
