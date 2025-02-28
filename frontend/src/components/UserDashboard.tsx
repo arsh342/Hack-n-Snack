@@ -228,7 +228,11 @@ const UserDashboard = () => {
     return (
       <Layout>
         <div className="flex items-center justify-center min-h-screen bg-green-50 shadow-lg rounded-3xl mx-2 sm:mx-4 md:mx-6 lg:mx-8">
-          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 border-t-2 border-b-2 border-green-600"></div>
+          <img
+            src="https://s4.ezgif.com/tmp/ezgif-4f2557a102e130.gif" // Assuming it's in the public folder
+            alt="Loading..."
+            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover"
+          />
         </div>
       </Layout>
     );
