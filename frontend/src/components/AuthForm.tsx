@@ -423,7 +423,7 @@ const AuthForm = () => {
                     </div>
 
                     <div className="mt-4 flex flex-col gap-3">
-                      <div className="w-full">
+                      <div className="w-full border border-gray-300 rounded-md bg-white shadow-sm hover:bg-gray-50 transition-all duration-200">
                         <GoogleLogin
                           onSuccess={handleGoogleLogin}
                           onError={() => toast.error("Google login failed")}
@@ -438,9 +438,9 @@ const AuthForm = () => {
                       <button
                         type="button"
                         onClick={togglePhoneAuth}
-                        className="w-full inline-flex justify-center items-center px-4 py-3 border border-green-200 rounded-xl shadow-sm bg-green-50 text-base font-medium text-gray-700 hover:bg-green-200 transition-all duration-200"
+                        className="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-200"
                       >
-                        <Phone className="h-5 w-5 mr-2" />
+                        <Phone className="h-5 w-5 mr-2 text-gray-500" />
                         <span>Continue with Phone</span>
                       </button>
                     </div>
