@@ -18,7 +18,6 @@ SnackSphere is a modern e-commerce platform for snacks, featuring role-based acc
 - **Styling**: Tailwind CSS, Framer Motion
 - **Backend**: Supabase (Auth, DB, APIs)
 - **Routing**: React Router DOM
-- **Notifications**: react-hot-toast
 - **Icons**: lucide-react
 - **Payments**: Stripe
 
