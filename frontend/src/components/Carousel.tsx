@@ -117,12 +117,12 @@ const Carousel: React.FC = () => {
                 {item.description}
               </p>
               <div className="more grid grid-cols-2 gap-5">
-                {/* <button
+                <button
                   onClick={() => handleViewRecipe(item.id)}
                   className="rounded-full bg-gradient-to-r from-[#81baa0] to-[#46a39c] text-white uppercase font-['League_Gothic'] py-2 px-4"
                 >
                   View Recipe
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
@@ -132,13 +132,13 @@ const Carousel: React.FC = () => {
       <div className="arrows w-[min(1200px,90vw)] flex justify-between absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[25px] z-[100] pointer-events-none">
         <button
           onClick={handlePrev}
-          className="w-[50px] h-[50px] rounded-full bg-[#80a15400] text-white text-2xl hover:border-[#7fa154] hover:scale-110 transition-all pointer-events-auto"
+          className="w-[50px] h-[50px] rounded-full bg-[#7fa154] text-white text-2xl hover:border-[#7fa154] hover:scale-110 transition-all pointer-events-auto"
         >
           {"<"}
         </button>
         <button
           onClick={handleNext}
-          className="w-[50px] h-[50px] rounded-full bg-[#80a15400] text-white text-2xl hover:border-[#7fa154] hover:scale-110 transition-all pointer-events-auto"
+          className="w-[50px] h-[50px] rounded-full bg-[#7fa154] text-white text-2xl hover:border-[#7fa154] hover:scale-110 transition-all pointer-events-auto"
         >
           {">"}
         </button>

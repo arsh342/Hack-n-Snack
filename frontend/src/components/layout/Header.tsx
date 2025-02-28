@@ -35,26 +35,26 @@ const Header = () => {
 
   return (
     <header className="text-white shadow-lg" style={{ backgroundImage: "radial-gradient(#7fa154, #537b3f)" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex justify-between h-12 sm:h-16">
           <div className="flex items-center">
-            <ChefHat className="w-8 h-8 mr-2 text-green-100" />
-            <h1 className="text-2xl font-bold">SnackSphere</h1>
+            <ChefHat className="w-6 h-6 sm:w-8 sm:h-8 mr-1 sm:mr-2 text-green-100" />
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold">SnackSphere</h1>
           </div>
 
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+          <div className="hidden sm:ml-4 md:ml-6 sm:flex sm:items-center">
             {user && (
-              <div className="relative flex items-center gap-6">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-green-100/10 shadow-md">
-                  <User size={18} className="text-green-100" />
-                  <span className="text-sm font-medium text-green-50">Welcome, {userName}</span>
+              <div className="relative flex items-center gap-3 md:gap-6">
+                <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-green-100/10 shadow-md">
+                  <User size={14} sm:size={18} className="text-green-100" />
+                  <span className="text-xs sm:text-sm font-medium text-green-50">Welcome, {userName}</span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-100/10 hover:bg-green-100/20 transition-all duration-200 shadow-md"
+                  className="flex items-center gap-2 sm:gap-2 px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-green-100/10 hover:bg-green-100/20 transition-all duration-200 shadow-md"
                 >
-                  <LogOut size={18} />
-                  <span className="text-sm font-medium">Logout</span>
+                  <LogOut size={14} sm:size={18} />
+                  <span className="text-xs sm:text-sm font-medium">Logout</span>
                 </button>
               </div>
             )}
@@ -63,9 +63,9 @@ const Header = () => {
           <div className="flex items-center sm:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-green-100 hover:bg-green-100/10 transition-all duration-200"
+              className="p-1 sm:p-2 rounded-lg text-green-100 hover:bg-green-100/10 transition-all duration-200"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={20} sm:size={24} /> : <Menu size={20} sm:size={24} />}
             </button>
           </div>
         </div>
@@ -77,17 +77,17 @@ const Header = () => {
         } overflow-hidden bg-green-600`}
       >
         {user && (
-          <div className="px-4 py-3 space-y-3">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-green-100/10 shadow-md">
-              <User size={20} />
-              <span className="text-sm text-green-50">Welcome, {userName}</span>
+          <div className="px-2 sm:px-4 py-2 sm:py-3 space-y-2 sm:space-y-3">
+            <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-xl bg-green-100/10 shadow-md">
+              <User size={16} sm:size={20} />
+              <span className="text-xs sm:text-sm text-green-50">Welcome, {userName}</span>
             </div>
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 p-3 rounded-xl bg-green-100/10 hover:bg-green-100/20 transition-all duration-200 shadow-md"
+              className="w-full flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-xl bg-green-100/10 hover:bg-green-100/20 transition-all duration-200 shadow-md"
             >
-              <LogOut size={20} />
-              <span className="text-sm font-medium">Logout</span>
+              <LogOut size={16} sm:size={20} />
+              <span className="text-xs sm:text-sm font-medium">Logout</span>
             </button>
           </div>
         )}

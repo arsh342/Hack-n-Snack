@@ -1,4 +1,5 @@
-// src/components/products/ProductGrid.tsx
+"use client";
+
 import React from "react";
 import { Database } from "../../types/database";
 import ProductCard from "./ProductCard";
@@ -28,16 +29,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, favorites, onAddToC
   const categories = Array.from(new Set(products.map((product) => product.category || "Uncategorized")));
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6 sm:space-y-8 md:space-y-10">
       {categories.length > 0 ? (
         categories.map((category) => (
-          <div key={category} className="space-y-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 capitalize">{category}</h2>
+          <div key={category} className="space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 capitalize">{category}</h2>
             <motion.div
               variants={container}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
             >
               {products
                 .filter((product) => (product.category || "Uncategorized") === category)
@@ -55,8 +56,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products, favorites, onAddToC
           </div>
         ))
       ) : (
-        <div className="text-center py-10 bg-green-100 rounded-xl shadow-md border border-green-200">
-          <p className="text-gray-600 text-lg">No snacks available at the moment.</p>
+        <div className="text-center py-6 sm:py-8 md:py-10 bg-green-100 rounded-xl shadow-md border border-green-200">
+          <p className="text-gray-600 text-base sm:text-lg">No snacks available at the moment.</p>
         </div>
       )}
     </div>
