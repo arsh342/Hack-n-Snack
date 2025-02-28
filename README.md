@@ -31,12 +31,14 @@ SnackSphere is a modern e-commerce platform for snacks, featuring role-based acc
 ### Installation
 **Clone the repo**:
    ```bash
-   git clone https://github.com/your-username/snacksphere.git
-   cd snacksphere
+   git clone https://github.com/arsh342/Hack-n-Snack.git
+   cd Hack-n-Snack
+```
 
  🚀 Setup Guide
 
 ### Install Dependencies
+
 ```bash
 npm install
 ```
