@@ -54,7 +54,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```bash
 npm run dev
 ```
-Visit [http://localhost:3000](http://localhost:3000).
+Visit [http://localhost:5173](http://localhost:5173).
 
 ---
 
